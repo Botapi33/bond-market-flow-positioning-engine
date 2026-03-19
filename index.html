@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bond Market Flow & Positioning Engine | BondStats</title>
+  <meta
+    name="description"
+    content="A professional BondStats engine combining sovereign yields, institutional demand proxies, flow pressure, liquidity conditions and positioning regimes in one bond market framework."
+  />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <main class="shell">
+
+    <section class="hero-card">
+      <div class="hero-copy">
+        <p class="eyebrow">BondStats Signature Tool</p>
+        <h1>Bond Market Flow &amp; Positioning Engine</h1>
+        <p class="hero-text">
+          A professional fixed income signal engine designed to assess who may be driving the bond market,
+          how strong flow pressure appears, and whether current positioning looks supportive, defensive or stressed.
+        </p>
+      </div>
+
+      <div class="hero-status-card">
+        <span class="hero-status-label">Current Positioning Regime</span>
+        <strong id="regimeValue" class="hero-status-value regime-policy">Policy Transition</strong>
+        <p id="regimeText" class="hero-status-text">
+          Cross-market yields remain elevated while institutional demand appears supportive and liquidity conditions are not yet disorderly.
+        </p>
+      </div>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="kpi-card kpi-card-primary">
+        <span class="kpi-label">Institutional Demand</span>
+        <strong id="demandValue" class="kpi-value">Supportive</strong>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Flow Pressure</span>
+        <strong id="flowValue" class="kpi-value">Mixed</strong>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Auction Stress Proxy</span>
+        <strong id="auctionValue" class="kpi-value">Contained</strong>
+      </article>
+
+      <article class="kpi-card">
+        <span class="kpi-label">Positioning Score</span>
+        <strong id="positioningScoreValue" class="kpi-value">52</strong>
+      </article>
+    </section>
+
+    <section class="main-grid">
+      <section class="panel-card">
+        <div class="section-head">
+          <h2>Current Market Inputs</h2>
+          <p>
+            The defaults are seeded with current bond-market reference levels. Adjust them to explore how demand, flow pressure and positioning evolve.
+          </p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="us10yInput">US 10Y Yield (%)</label>
+            <input id="us10yInput" type="number" step="0.01" value="4.20" />
+          </div>
+
+          <div class="field">
+            <label for="us2yInput">US 2Y Yield (%)</label>
+            <input id="us2yInput" type="number" step="0.01" value="3.70" />
+          </div>
+
+          <div class="field">
+            <label for="de10yInput">Germany 10Y Yield (%)</label>
+            <input id="de10yInput" type="number" step="0.01" value="2.98" />
+          </div>
+
+          <div class="field">
+            <label for="uk10yInput">UK 10Y Yield (%)</label>
+            <input id="uk10yInput" type="number" step="0.01" value="4.79" />
+          </div>
+
+          <div class="field">
+            <label for="jp10yInput">Japan 10Y Yield (%)</label>
+            <input id="jp10yInput" type="number" step="0.01" value="2.27" />
+          </div>
+
+          <div class="field">
+            <label for="realYieldInput">US 10Y Real Yield (%)</label>
+            <input id="realYieldInput" type="number" step="0.01" value="1.83" />
+          </div>
+
+          <div class="field">
+            <label for="liquidityInput">Liquidity Stress (0–100)</label>
+            <input id="liquidityInput" type="number" min="0" max="100" step="1" value="42" />
+          </div>
+
+          <div class="field">
+            <label for="safeHavenInput">Safe-Haven Demand (0–100)</label>
+            <input id="safeHavenInput" type="number" min="0" max="100" step="1" value="54" />
+          </div>
+
+          <div class="field">
+            <label for="bankDemandInput">Bank / Basel Demand Support (0–100)</label>
+            <input id="bankDemandInput" type="number" min="0" max="100" step="1" value="61" />
+          </div>
+
+          <div class="field">
+            <label for="fundFlowsInput">Fund Flow Pressure (0–100)</label>
+            <input id="fundFlowsInput" type="number" min="0" max="100" step="1" value="48" />
+          </div>
+
+          <div class="field">
+            <label for="creditStressInput">Credit Stress (0–100)</label>
+            <input id="creditStressInput" type="number" min="0" max="100" step="1" value="36" />
+          </div>
+
+          <div class="field">
+            <label for="scenarioLabelInput">Optional Scenario Label</label>
+            <input id="scenarioLabelInput" type="text" placeholder="e.g. Current Macro Snapshot" />
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="updateBtn" class="primary-btn">Update Engine</button>
+          <button id="resetBtn" class="secondary-btn">Reset</button>
+        </div>
+      </section>
+
+      <section class="panel-card">
+        <div class="section-head">
+          <h2>Engine Interpretation</h2>
+          <p>
+            The framework translates current signals into a readable bond market structure view.
+          </p>
+        </div>
+
+        <div class="interpretation-box">
+          <h3>Current Read</h3>
+          <p id="interpretationText">
+            Current market conditions suggest a policy-transition regime: sovereign yields remain high, bank demand support is still relevant, and the market is not yet showing outright liquidity dislocation.
+          </p>
+        </div>
+
+        <div class="signal-stack">
+          <div class="signal-row">
+            <span>Institutional Demand Proxy</span>
+            <strong id="institutionalStatus" class="signal-value signal-positive">Supportive</strong>
+          </div>
+          <div class="signal-row">
+            <span>Flow Pressure Indicator</span>
+            <strong id="flowStatus" class="signal-value signal-neutral">Mixed</strong>
+          </div>
+          <div class="signal-row">
+            <span>Auction Stress Proxy</span>
+            <strong id="auctionStatus" class="signal-value signal-neutral">Contained</strong>
+          </div>
+          <div class="signal-row">
+            <span>Macro Positioning Tone</span>
+            <strong id="macroStatus" class="signal-value signal-caution">Cautious</strong>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="chart-grid">
+      <section class="chart-card">
+        <div class="section-head">
+          <h2>Flow &amp; Positioning Profile</h2>
+          <p>Visual composition of the core signal blocks driving the current market regime.</p>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="profileChart"></canvas>
+        </div>
+      </section>
+
+      <section class="chart-card">
+        <div class="section-head">
+          <h2>Sovereign Yield Map</h2>
+          <p>Current 10-year yield levels across major developed bond markets.</p>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="yieldChart"></canvas>
+        </div>
+      </section>
+    </section>
+
+    <section class="table-card">
+      <div class="section-head">
+        <h2>Scenario Matrix</h2>
+        <p>How the market regime changes as liquidity, flow pressure and demand support shift.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Institutional Demand</th>
+              <th>Flow Pressure</th>
+              <th>Auction Stress</th>
+              <th>Regime</th>
+            </tr>
+          </thead>
+          <tbody id="scenarioTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="insight-grid">
+      <article class="info-card">
+        <h3>Why This Is Different</h3>
+        <p>
+          Most bond tools explain rates or curves in isolation. This engine is built around market structure:
+          who may be buying, how flows may be shifting, and whether conditions remain orderly or increasingly fragile.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <h3>What It Is Designed For</h3>
+        <p>
+          The Flow &amp; Positioning Engine is intended for macro monitoring, institutional interpretation and scenario analysis.
+          It is not a black-box forecast, but a structured way of reading fixed income conditions.
+        </p>
+      </article>
+    </section>
+
+    <section class="methodology-card">
+      <div class="section-head">
+        <h2>Methodology</h2>
+      </div>
+      <p>
+        The engine combines simplified signal blocks across institutional demand support, flow pressure,
+        auction-style stress, real yield pressure, cross-market yield conditions and liquidity-sensitive inputs.
+      </p>
+      <p>
+        These are translated into a broader bond market positioning regime:
+        Risk-On, Neutral, Policy Transition, Defensive or Liquidity Stress.
+      </p>
+      <p class="disclaimer">
+        This BondStats engine is provided for informational and educational purposes only.
+        It is a simplified analytical framework and should not be interpreted as investment advice,
+        regulatory analysis or an official market forecast.
+      </p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
